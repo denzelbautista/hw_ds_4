@@ -41,6 +41,12 @@ public:
         xRoot->rank++;
     }
     }
+
+    bool isConnected(Node<T> *x, Node<T> *y){
+        Node<T> *xRoot = find(x);
+        Node<T> *yRoot = find(y);
+        return xRoot == yRoot ? true : false;
+    }
 };
 
 int main(){
