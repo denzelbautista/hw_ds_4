@@ -5,7 +5,7 @@ template <typename T>
 struct Node{
     T data;
     Node<T> *parent = nullptr;
-    int rank = 0;
+    int nodeRank = 0;
     Node(){}
     Node(T t){
       data = t;
@@ -27,18 +27,18 @@ public:
     }
 
     void setUnion(Node<T> *x, Node<T> *y){
-      Node<T> *xRoot = find(x);
-    Node<T> *yRoot = find(y);
+        Node<T> *xRoot = find(x);
+        Node<T> *yRoot = find(y);
 
     if (xRoot == yRoot) return;
 
-    if (xRoot->rank < yRoot->rank) {
+    if (xRoot->nodeRank < yRoot->nodeRank) {
         xRoot->parent = yRoot;
-    } else if (xRoot->rank > yRoot->rank) {
+    } else if (xRoot->nodeRank > yRoot->nodeRank) {
         yRoot->parent = xRoot;
     } else {
         yRoot->parent = xRoot;
-        xRoot->rank++;
+        xRoot->nodeRank++;
     }
     }
 
@@ -46,9 +46,27 @@ public:
         Node<T> *xRoot = find(x);
         Node<T> *yRoot = find(y);
         return xRoot == yRoot ? true : false;
-    }
+    }
 };
 
 int main(){
+    Node<int> *a = new Node(1);
+    Node<int> *b = new Node(2);
+    Node<int> *c = new Node(3);
+    Node<int> *d = new Node(4);
+
+    DisjointSet<int> dj;
+    dj.makeSet(a);
+    dj.makeSet(b);
+    dj.makeSet(c);
+    dj.makeSet(d);
+
+    dj.setUnion(a, b);
+    dj.setUnion(c, d);
+
+    cout << dj.isConnected(a, b) << endl;
+    cout << dj.isConnected(c, b) << endl;
+
+    
   return 0;
 }
